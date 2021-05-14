@@ -29,8 +29,10 @@ describe('StableMath', function () {
         const balances = [bn(10e18), bn(12e18)];
 
         const result = await mock.invariant(amp, balances);
-        const expectedInvariant = calculateInvariant(balances, amp);
 
+        const expectedInvariant = calculateInvariant(balances, amp);
+        console.log('Result', result);
+        console.log('Expected', expectedInvariant);
         expectEqualWithError(result, expectedInvariant, MAX_RELATIVE_ERROR);
       });
       it('returns invariant equals analytical solution', async () => {
@@ -40,6 +42,8 @@ describe('StableMath', function () {
         const result = await mock.invariant(amp, balances);
         const expectedInvariant = calculateAnalyticalInvariantForTwoTokens(balances, amp);
 
+        console.log('Result', result);
+        console.log('Expected', expectedInvariant);
         expectEqualWithError(result, expectedInvariant, MAX_RELATIVE_ERROR);
       });
     });
@@ -47,10 +51,14 @@ describe('StableMath', function () {
       it('returns invariant', async () => {
         const amp = bn(100e18);
         const balances = [bn(10e18), bn(12e18), bn(14e18)];
-
         const result = await mock.invariant(amp, balances);
         const expectedInvariant = calculateInvariant(balances, amp);
-
+        console.log(
+          'Balance',
+          balances.map((balance) => balance)
+        );
+        console.log('Result', result);
+        console.log('Expected', expectedInvariant);
         expectEqualWithError(result, expectedInvariant, MAX_RELATIVE_ERROR);
       });
     });
@@ -67,7 +75,12 @@ describe('StableMath', function () {
 
         const result = await mock.inGivenOut(amp, balances, tokenIndexIn, tokenIndexOut, amountOut);
         const expectedAmountIn = calcInGivenOut(balances, amp, tokenIndexIn, tokenIndexOut, amountOut);
-
+        console.log(
+          'Balance',
+          balances.map((balance) => balance)
+        );
+        console.log('Result', result);
+        console.log('Expected', expectedAmountIn);
         expectEqualWithError(result, bn(expectedAmountIn.toFixed(0)), MAX_RELATIVE_ERROR);
       });
     });
@@ -81,7 +94,8 @@ describe('StableMath', function () {
 
         const result = await mock.inGivenOut(amp, balances, tokenIndexIn, tokenIndexOut, amountOut);
         const expectedAmountIn = calcInGivenOut(balances, amp, tokenIndexIn, tokenIndexOut, amountOut);
-
+        console.log('Result', result);
+        console.log('Expected', expectedAmountIn);
         expectEqualWithError(result, bn(expectedAmountIn.toFixed(0)), MAX_RELATIVE_ERROR);
       });
     });
@@ -98,7 +112,8 @@ describe('StableMath', function () {
 
         const result = await mock.outGivenIn(amp, balances, tokenIndexIn, tokenIndexOut, amountIn);
         const expectedAmountOut = calcOutGivenIn(balances, amp, tokenIndexIn, tokenIndexOut, amountIn);
-
+        console.log('Result', result);
+        console.log('Expected', expectedAmountOut);
         expectEqualWithError(result, bn(expectedAmountOut.toFixed(0)), MAX_RELATIVE_ERROR);
       });
     });
@@ -112,7 +127,8 @@ describe('StableMath', function () {
 
         const result = await mock.outGivenIn(amp, balances, tokenIndexIn, tokenIndexOut, amountIn);
         const expectedAmountOut = calcOutGivenIn(balances, amp, tokenIndexIn, tokenIndexOut, amountIn);
-
+        console.log('Result', result);
+        console.log('Expected', expectedAmountOut);
         expectEqualWithError(result, bn(expectedAmountOut.toFixed(0)), MAX_RELATIVE_ERROR);
       });
     });
@@ -138,6 +154,9 @@ describe('StableMath', function () {
 
         const expectedFeeAmount = calculateOneTokenSwapFeeAmount(balances, amp, lastInvariant, tokenIndex);
         const expectedProtocolFeeAmount = expectedFeeAmount.mul(decimal(protocolSwapFeePercentage).div(1e18));
+        console.log('Result', result);
+        console.log('ExpectedFeeAmount', expectedFeeAmount);
+        console.log('ExpectedProtocolfeeAmount', expectedProtocolFeeAmount);
 
         expectEqualWithError(result, bn(expectedProtocolFeeAmount.toFixed(0)), MAX_RELATIVE_ERROR);
       });
@@ -161,7 +180,9 @@ describe('StableMath', function () {
         const expectedFeeAmount = calculateOneTokenSwapFeeAmount(balances, amp, lastInvariant, tokenIndex);
 
         const expectedProtocolFeeAmount = expectedFeeAmount.mul(decimal(protocolSwapFeePercentage).div(1e18));
-
+        console.log('Result', result);
+        console.log('ExpectedFeeAmount', expectedFeeAmount);
+        console.log('ExpectedProtocolfeeAmount', expectedProtocolFeeAmount);
         expectEqualWithError(result, bn(expectedProtocolFeeAmount.toFixed(0)), MAX_RELATIVE_ERROR);
       });
     });

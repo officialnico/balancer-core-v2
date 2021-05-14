@@ -114,9 +114,11 @@ export function calcInGivenOut(
   fpTokenAmountOut: BigNumberish
 ): Decimal {
   const invariant = fromFp(calculateInvariant(fpBalances, fpAmplificationParameter));
-
+  console.log('Invariant', invariant);
   const balances = fpBalances.map(fromFp);
+
   balances[tokenIndexOut] = balances[tokenIndexOut].sub(fromFp(fpTokenAmountOut));
+  console.log('Balances', balances);
 
   const finalBalanceIn = _getTokenBalanceGivenInvariantAndAllOtherBalances(
     balances,
@@ -124,8 +126,11 @@ export function calcInGivenOut(
     invariant,
     tokenIndexIn
   );
+  console.log('Final balances in', finalBalanceIn);
 
-  return toFp(finalBalanceIn.sub(balances[tokenIndexIn]));
+  const result = toFp(finalBalanceIn.sub(balances[tokenIndexIn]));
+  console.log('Return result', result);
+  return result;
 }
 
 export function calcBptOutGivenExactTokensIn(
